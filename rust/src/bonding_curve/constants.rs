@@ -1,4 +1,5 @@
 pub use discriminators::*;
+#[cfg(feature = "pda")]
 pub use seeds::*;
 pub use layout::*;
 pub use account_counts::*;
@@ -8,12 +9,16 @@ use solana_pubkey::{Pubkey, pubkey};
 pub const PROGRAM_ID: Pubkey = pubkey!("Lbuyii1PVUvt9xToGuyUf6CQCDbdRRzzo8SsHuNYMkf");
 
 pub mod discriminators {
+    #[cfg(feature = "accounts")]
     pub use accounts::*;
+    #[cfg(feature = "events")]
     pub use events::*;
+    #[cfg(feature = "instructions")]
     pub use instructions::*;
 
     pub const ANCHOR_DISCRIMINATOR_SIZE: usize = 8;
 
+    #[cfg(feature = "accounts")]
     pub mod accounts {
         use super::*;
 
@@ -34,6 +39,7 @@ pub mod discriminators {
             [51, 88, 38, 85, 206, 166, 162, 156];
     }
 
+    #[cfg(feature = "events")]
     pub mod events {
         use super::*;
 
@@ -85,6 +91,8 @@ pub mod discriminators {
         pub const SELL_EVENT_DISCRIMINATOR: [u8; ANCHOR_DISCRIMINATOR_SIZE] =
             [62, 47, 55, 10, 165, 3, 220, 42];
     }
+
+    #[cfg(feature = "instructions")]
 
     pub mod instructions {
         use super::*;
@@ -139,6 +147,7 @@ pub mod discriminators {
     }
 }
 
+#[cfg(feature = "pda")]
 pub mod seeds {
     pub const GLOBAL_CONFIG_SEED: &str = "global_config";
 

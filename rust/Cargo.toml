@@ -4,16 +4,22 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-solana-pubkey = { version = "4.4.0", features = ["borsh", "curve25519"] }
+solana-pubkey = { version = "4.4.0", features = ["borsh"] }
 solana-instruction = "4.0.0"
-borsh = { version = "1.8.1", features = ["derive"] }
+borsh = { version = "1.8.1" }
 
 [features]
 default = ["full"]
 
-full = ["events"]
+full = ["events", "accounts", "instructions", "pda"]
 
 # includes `admin` ixs
 dev = []
 # incluses events
-events = []
+events = ["borsh/derive"]
+# includes accounts
+accounts = ["borsh/derive"]
+# includes instructions
+instructions = ["pda"]
+# includes pda
+pda = ["solana-pubkey/curve25519"]

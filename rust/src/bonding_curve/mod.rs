@@ -1,15 +1,21 @@
 pub mod constants;
+#[cfg(feature = "accounts")]
 pub mod accounts;
 #[cfg(feature = "events")]
 pub mod events;
+#[cfg(feature = "instructions")]
 pub mod instructions;
 pub mod extentions;
+#[cfg(feature = "pda")]
 pub mod pda;
 
 pub use constants::*;
+#[cfg(feature = "accounts")]
 pub use accounts::*;
 #[cfg(feature = "events")]
 pub use events::*;
+#[cfg(feature = "instructions")]
 pub use instructions::*;
 pub use extentions::*;
+#[cfg(feature = "pda")]
 pub use pda::*;
