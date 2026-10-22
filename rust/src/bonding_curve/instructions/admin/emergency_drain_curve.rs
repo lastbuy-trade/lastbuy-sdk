@@ -18,6 +18,12 @@ impl Discriminator for EmergencyDrainCurveInstruction {
 
 impl EmergencyDrainCurveInstruction {
     pub fn new(ctx: EmergencyDrainCurveInstructionCtx) -> Instruction {
+        // Instruction::new_with_bytes(
+        //     program_id, 
+        //     data, 
+        //     accounts
+        // );        
+
         todo!()
     }
 }

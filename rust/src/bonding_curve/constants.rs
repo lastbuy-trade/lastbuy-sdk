@@ -1,6 +1,17 @@
 pub use discriminators::*;
 pub use seeds::*;
 
+use solana_pubkey::{Pubkey, pubkey};
+
+#[cfg(feature = "mainnet-beta")]
+pub const PROGRAM_ID: Pubkey = pubkey!("Lbuyii1PVUvt9xToGuyUf6CQCDbdRRzzo8SsHuNYMkf");
+
+#[cfg(feature = "devnet")]
+pub const PROGRAM_ID: Pubkey = pubkey!("Lbuyii1PVUvt9xToGuyUf6CQCDbdRRzzo8SsHuNYMkf");
+
+#[cfg(feature = "testnet")]
+pub const PROGRAM_ID: Pubkey = pubkey!("Lbuyii1PVUvt9xToGuyUf6CQCDbdRRzzo8SsHuNYMkf");
+
 pub mod discriminators {
     pub use accounts::*;
     pub use events::*;
