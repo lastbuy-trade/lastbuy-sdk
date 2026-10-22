@@ -3,10 +3,20 @@ pub use discriminators::*;
 pub use seeds::*;
 pub use layout::*;
 pub use account_counts::*;
+pub use ids::*;
 
 use solana_pubkey::{Pubkey, pubkey};
 
-pub const PROGRAM_ID: Pubkey = pubkey!("Lbuyii1PVUvt9xToGuyUf6CQCDbdRRzzo8SsHuNYMkf");
+pub mod ids {
+    use super::*;
+
+    pub const PROGRAM_ID: Pubkey = pubkey!("Lbuyii1PVUvt9xToGuyUf6CQCDbdRRzzo8SsHuNYMkf");
+    
+    #[cfg(feature = "pda")]
+    pub const SPL_TOKEN_PROGRAM_ID: Pubkey = pubkey!("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA");
+    #[cfg(feature = "pda")]
+    pub const SPL_TOKEN_2022_PROGRAM_ID: Pubkey = pubkey!("TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb");
+}
 
 pub mod discriminators {
     #[cfg(feature = "accounts")]
