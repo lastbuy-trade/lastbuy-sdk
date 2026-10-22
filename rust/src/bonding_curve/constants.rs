@@ -1,16 +1,10 @@
 pub use discriminators::*;
 pub use seeds::*;
 pub use layout::*;
+pub use account_counts::*;
 
 use solana_pubkey::{Pubkey, pubkey};
 
-#[cfg(feature = "mainnet-beta")]
-pub const PROGRAM_ID: Pubkey = pubkey!("Lbuyii1PVUvt9xToGuyUf6CQCDbdRRzzo8SsHuNYMkf");
-
-#[cfg(feature = "devnet")]
-pub const PROGRAM_ID: Pubkey = pubkey!("Lbuyii1PVUvt9xToGuyUf6CQCDbdRRzzo8SsHuNYMkf");
-
-#[cfg(feature = "testnet")]
 pub const PROGRAM_ID: Pubkey = pubkey!("Lbuyii1PVUvt9xToGuyUf6CQCDbdRRzzo8SsHuNYMkf");
 
 pub mod discriminators {
@@ -239,5 +233,37 @@ pub mod layout {
                 + token_symbol.len()
                 + token_uri.len()
         }
+    }
+}
+
+pub mod account_counts {
+    pub use remaining::*;
+
+    pub const EMERGENCY_DRAIN_CURVE_ACCOUNTS: usize = 11;
+
+    pub const BUY_EXACT_ACCOUNTS: usize = 10;
+
+    pub const CLAIM_CREATOR_FEE_ACCOUNTS: usize = 21;
+
+    pub const CLAIM_PRIZE_IDEMPOTENT_ACCOUNTS: usize = 5;
+
+    pub const DEFINE_WINNER_IDEMPOTENT_ACCOUNTS: usize = 5;
+
+    pub const FUND_MIGRATION_ACCOUNTS: usize = 5;
+
+    pub const INITIALIZE_GLOBAL_ACCOUNTS: usize = 5;
+
+    pub const LAUNCH_ACCOUNTS: usize = 10;
+
+    pub const MIGRATE_ACCOUNTS: usize = 23;
+
+    pub const PREPARE_MIGRATION_ACCOUNTS: usize = 14;
+
+    pub const SELL_EXACT_ACCOUNTS: usize = 10;
+
+    pub const UPDATE_GLOBAL_ACCOUNTS: usize = 2;
+
+    pub mod remaining {
+        // todo
     }
 }

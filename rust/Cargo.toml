@@ -11,16 +11,9 @@ borsh = { version = "1.8.1", features = ["derive"] }
 [features]
 default = ["full"]
 
-full = ["events", "mainnet-beta"]
+full = ["events"]
 
 # includes `admin` ixs
 dev = []
 # incluses events
 events = []
-
-# clusters
-# program ids may differ based on cluster and current state
-# currently all clusters share the same LastBuy Bonding Curve Program ID
-mainnet-beta = []
-devnet = []
-testnet = []

@@ -22,16 +22,18 @@ impl EmergencyDrainCurveInstruction {
         mint, 
         recipient 
     }: EmergencyDrainCurveInstructionCtx) -> Instruction {
-        // let curve = 
+        let curve = derive_curve(&mint).0;
+
+        // todo: 
 
         let mut ix_data: [u8; EMERGENCY_DRAIN_CURVE_SIZE] = [0u8; EMERGENCY_DRAIN_CURVE_SIZE]; 
-        let mut ix_accounts = Vec::with_capacity(11);  // todo, use const EMERGENCY_DRAIN_CURVE_ACCOUNTS 
+        let mut ix_accounts = Vec::with_capacity(EMERGENCY_DRAIN_CURVE_ACCOUNTS); 
 
         ix_data[..ANCHOR_DISCRIMINATOR_SIZE].copy_from_slice(&EMERGENCY_DRAIN_CURVE_DISCRIMINATOR);
         ix_accounts.extend([
             AccountMeta::new(user, true),
             AccountMeta::new(recipient, false),
-            
+            // todo: 
         ]);
 
         Instruction::new_with_bytes(
