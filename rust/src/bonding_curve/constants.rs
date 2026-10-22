@@ -147,7 +147,6 @@ pub mod discriminators {
     }
 }
 
-#[cfg(feature = "pda")]
 pub mod seeds {
     pub const GLOBAL_CONFIG_SEED: &str = "global_config";
 
