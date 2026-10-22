@@ -6,6 +6,7 @@ edition = "2024"
 [dependencies]
 solana-pubkey = "4.4.0" 
 solana-instruction = { version = "4.0.0", optional = true }
+spl-associated-token-account-interface = { version = "2.0.0", optional = true }
 borsh = { version = "1.8.1", optional = true }
 
 [features]
@@ -20,6 +21,10 @@ events = ["dep:borsh", "borsh/derive", "solana-pubkey/borsh"]
 # includes accounts
 accounts = ["dep:borsh", "borsh/derive", "solana-pubkey/borsh"]
 # includes instructions
-instructions = ["dep:solana-instruction", "pda"]
+instructions = [
+    "dep:solana-instruction",
+    "dep:spl-associated-token-account-interface", 
+    "pda"
+]
 # includes pda
 pda = ["solana-pubkey/curve25519"]

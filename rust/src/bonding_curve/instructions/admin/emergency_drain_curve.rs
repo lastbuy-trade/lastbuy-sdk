@@ -2,7 +2,7 @@ use crate::{constants::*, extentions::*, pda::*};
 
 use solana_instruction::{Instruction, AccountMeta};
 use solana_pubkey::Pubkey;
-
+use spl_associated_token_account_interface::address::get_associated_token_address_with_program_id;
 
 pub struct EmergencyDrainCurveInstruction;
 
@@ -23,8 +23,18 @@ impl EmergencyDrainCurveInstruction {
         recipient 
     }: EmergencyDrainCurveInstructionCtx) -> Instruction {
         let curve = derive_curve(&mint).0;
+        let global_config = derive_global_config().0;
 
-        // todo: 
+        let recipient_ata = get_associated_token_address_with_program_id(
+            &recipient, 
+            &mint, 
+            &SPL_TOKEN_2022_PROGRAM_ID
+        );
+        let curve_ata = get_associated_token_address_with_program_id(
+            &curve, 
+            &mint, 
+            &SPL_TOKEN_2022_PROGRAM_ID
+        );
 
         let mut ix_data: [u8; EMERGENCY_DRAIN_CURVE_SIZE] = [0u8; EMERGENCY_DRAIN_CURVE_SIZE]; 
         let mut ix_accounts = Vec::with_capacity(EMERGENCY_DRAIN_CURVE_ACCOUNTS); 
@@ -33,15 +43,21 @@ impl EmergencyDrainCurveInstruction {
         ix_accounts.extend([
             AccountMeta::new(user, true),
             AccountMeta::new(recipient, false),
-            // todo: 
+            AccountMeta::new(curve, false),
+            AccountMeta::new_readonly(mint, false),
+            AccountMeta::new(recipient_ata, false),
+            AccountMeta::new(curve_ata, false),
+            AccountMeta::new_readonly(global_config, false),
+            AccountMeta::new_readonly(SPL_TOKEN_PROGRAM_ID, false),
+            AccountMeta::new_readonly(SPL_TOKEN_2022_PROGRAM_ID, false),
+            AccountMeta::new_readonly(SPL_ATA_PROGRAM_ID, false),
+            AccountMeta::new_readonly(SYSTEM_PROGRAM_ID, false),
         ]);
 
         Instruction::new_with_bytes(
             PROGRAM_ID, 
             &ix_data, 
             ix_accounts
-        );        
-
-        todo!()
+        )
     }
 }
