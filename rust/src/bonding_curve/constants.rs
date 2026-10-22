@@ -1,4 +1,5 @@
 pub use discriminators::*;
+pub use seeds::*;
 
 pub mod discriminators {
     pub use accounts::*;
@@ -130,4 +131,22 @@ pub mod discriminators {
         pub const UPDATE_GLOBAL_DISCRIMINATOR: [u8; ANCHOR_DISCRIMINATOR_SIZE] =
             [90, 152, 240, 21, 199, 38, 72, 20];
     }
+}
+
+pub mod seeds {
+    pub const GLOBAL_CONFIG_SEED: &str = "global_config";
+
+    pub const CURVE_SEED: &str = "curve";
+
+    pub const PRIZE_POOL_SEED: &str = "prize_pool";
+
+    pub const MINT_AUTHORITY_SEED: &str = "mint_authority";
+
+    pub const POOL_CREATOR_SEED: &str = "pool_creator";
+
+    pub const POOL_CREATOR_STATE_SEED: &str = "pool_creator_state";
+
+    pub const POOL_STATE_SEED: &str = "pool_state";
+
+    pub const NFT_MINT_SEED: &str = "nft_mint";
 }
