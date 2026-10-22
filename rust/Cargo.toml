@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-solana-pubkey = { version = "4.4.0", features = ["borsh"] }
+solana-pubkey = { version = "4.4.0", features = ["borsh", "curve25519"] }
 solana-instruction = "4.0.0"
 borsh = { version = "1.8.1", features = ["derive"] }
 

@@ -1,6 +1,6 @@
-use crate::{constants::*, extentions::*};
+use crate::{constants::*, extentions::*, pda::*};
 
-use solana_instruction::Instruction;
+use solana_instruction::{Instruction, AccountMeta};
 use solana_pubkey::Pubkey;
 
 
@@ -17,12 +17,28 @@ impl Discriminator for EmergencyDrainCurveInstruction {
 }
 
 impl EmergencyDrainCurveInstruction {
-    pub fn new(ctx: EmergencyDrainCurveInstructionCtx) -> Instruction {
-        // Instruction::new_with_bytes(
-        //     program_id, 
-        //     data, 
-        //     accounts
-        // );        
+    pub fn new(EmergencyDrainCurveInstructionCtx { 
+        user, 
+        mint, 
+        recipient 
+    }: EmergencyDrainCurveInstructionCtx) -> Instruction {
+        // let curve = 
+
+        let mut ix_data: [u8; EMERGENCY_DRAIN_CURVE_SIZE] = [0u8; EMERGENCY_DRAIN_CURVE_SIZE]; 
+        let mut ix_accounts = Vec::with_capacity(11);  // todo, use const EMERGENCY_DRAIN_CURVE_ACCOUNTS 
+
+        ix_data[..ANCHOR_DISCRIMINATOR_SIZE].copy_from_slice(&EMERGENCY_DRAIN_CURVE_DISCRIMINATOR);
+        ix_accounts.extend([
+            AccountMeta::new(user, true),
+            AccountMeta::new(recipient, false),
+            
+        ]);
+
+        Instruction::new_with_bytes(
+            PROGRAM_ID, 
+            &ix_data, 
+            ix_accounts
+        );        
 
         todo!()
     }
