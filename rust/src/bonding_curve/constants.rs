@@ -1,5 +1,6 @@
 pub use discriminators::*;
 pub use seeds::*;
+pub use layout::*;
 
 use solana_pubkey::{Pubkey, pubkey};
 
@@ -160,4 +161,83 @@ pub mod seeds {
     pub const POOL_STATE_SEED: &str = "pool_state";
 
     pub const NFT_MINT_SEED: &str = "nft_mint";
+}
+
+pub mod layout {
+    use super::*;
+
+    pub use payloads::*;
+
+    pub mod payloads {
+        use super::*;
+        
+        /// Borsh layout size of `GlobalConfigArgs` (without instruction discriminator):
+        ///
+        /// protocol_version: u8,
+        /// fees: FeeConfig (4 x u16 + 2 x Pubkey),
+        /// protocol: ProtocolConfig (i64 + u64 + Pubkey),
+        /// raydium: RaydiumConfig (4 x Pubkey + u64),
+        /// admin: AdminConfig (8 x bool)
+        pub const GLOBAL_CONFIG_ARGS_SIZE: usize =
+            1 + (4 * 2 + 32 * 2) + (8 + 8 + 32) + (32 * 4 + 8) + 8;
+
+        /// Borsh layout size of `LaunchArgs` length prefixes (3 x u32), without the
+        /// instruction discriminator and the string bytes themselves
+        pub const LAUNCH_ARGS_MIN_SIZE: usize = 4 + 4 + 4;
+
+        /// DISCRIMINATOR,
+        /// sol_in: u64,
+        /// min_tokens_out: u64
+        pub const BUY_EXACT_SIZE: usize = ANCHOR_DISCRIMINATOR_SIZE + 8 + 8;
+
+        /// DISCRIMINATOR (no args)
+        pub const CLAIM_CREATOR_FEE_SIZE: usize = ANCHOR_DISCRIMINATOR_SIZE;
+
+        /// DISCRIMINATOR (no args)
+        pub const CLAIM_PRIZE_IDEMPOTENT_SIZE: usize = ANCHOR_DISCRIMINATOR_SIZE;
+
+        /// DISCRIMINATOR (no args)
+        pub const DEFINE_WINNER_IDEMPOTENT_SIZE: usize = ANCHOR_DISCRIMINATOR_SIZE;
+
+        /// DISCRIMINATOR (no args)
+        pub const EMERGENCY_DRAIN_CURVE_SIZE: usize = ANCHOR_DISCRIMINATOR_SIZE;
+
+        /// DISCRIMINATOR (no args)
+        pub const FUND_MIGRATION_SIZE: usize = ANCHOR_DISCRIMINATOR_SIZE;
+
+        /// DISCRIMINATOR,
+        /// args: GlobalConfigArgs
+        pub const INITIALIZE_GLOBAL_SIZE: usize = ANCHOR_DISCRIMINATOR_SIZE + GLOBAL_CONFIG_ARGS_SIZE;
+
+        /// DISCRIMINATOR (no args)
+        pub const MIGRATE_SIZE: usize = ANCHOR_DISCRIMINATOR_SIZE;
+
+        /// DISCRIMINATOR (no args)
+        pub const PREPARE_MIGRATION_SIZE: usize = ANCHOR_DISCRIMINATOR_SIZE;
+
+        /// DISCRIMINATOR,
+        /// tokens_in: u64,
+        /// min_sol_out: u64
+        pub const SELL_EXACT_SIZE: usize = ANCHOR_DISCRIMINATOR_SIZE + 8 + 8;
+
+        /// DISCRIMINATOR,
+        /// args: GlobalConfigArgs
+        pub const UPDATE_GLOBAL_SIZE: usize = ANCHOR_DISCRIMINATOR_SIZE + GLOBAL_CONFIG_ARGS_SIZE;
+
+        /// Exact instruction data size of `launch` for the given metadata:
+        ///
+        /// DISCRIMINATOR,
+        /// args: LaunchArgs {
+        ///     token_name: string,
+        ///     token_symbol: string,
+        ///     token_uri: string,
+        /// }
+        pub const fn launch_size(token_name: &str, token_symbol: &str, token_uri: &str) -> usize {
+            ANCHOR_DISCRIMINATOR_SIZE
+                + LAUNCH_ARGS_MIN_SIZE
+                + token_name.len()
+                + token_symbol.len()
+                + token_uri.len()
+        }
+    }
 }
