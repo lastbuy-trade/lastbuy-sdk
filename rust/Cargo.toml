@@ -6,3 +6,11 @@ edition = "2024"
 [dependencies]
 solana-pubkey = { version = "4.4.0", features = ["borsh"] }
 borsh = { version = "1.8.1", features = ["derive"] }
+
+[features]
+default = ["full"]
+
+full = []
+
+# includes `admin` ixs
+dev = []
