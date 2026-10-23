@@ -4,7 +4,7 @@ use borsh::{BorshDeserialize, BorshSerialize};
 use solana_pubkey::Pubkey;
 
 /// Admin feature flags
-#[derive(BorshDeserialize, BorshSerialize, Debug, Clone, PartialEq)]
+#[derive(BorshDeserialize, BorshSerialize, Debug, Clone, PartialEq, Default)]
 pub struct AdminConfig {
     pub is_curve_swaps_disabled: bool,
     pub is_curve_launch_disabled: bool,
