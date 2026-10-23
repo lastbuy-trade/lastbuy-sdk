@@ -37,9 +37,9 @@ impl UpdateGlobalInstruction {
         let global_config = derive_global_config().0;
 
         let mut ix_data: Vec<u8> = Vec::with_capacity(UPDATE_GLOBAL_SIZE);
-        let mut ix_accounts: Vec<AccountMeta> = Vec::with_capacity(UPDATE_GLOBAL_ACCOUNTS);
+        let mut ix_accounts: Vec<AccountMeta> = Vec::with_capacity(Self::ACCOUNTS);
         
-        ix_data.extend(UPDATE_GLOBAL_DISCRIMINATOR);
+        ix_data.extend(Self::DISCRIMINATOR);
         args.serialize(&mut ix_data)?;
 
         ix_accounts.extend([
