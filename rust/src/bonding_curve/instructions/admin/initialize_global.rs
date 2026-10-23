@@ -36,7 +36,9 @@ impl InitializeGlobalInstruction {
         let mut ix_data: Vec<u8> = Vec::with_capacity(INITIALIZE_GLOBAL_SIZE);
         let mut ix_accounts: Vec<AccountMeta> = Vec::with_capacity(INITIALIZE_GLOBAL_ACCOUNTS);
 
+        ix_data.extend(INITIALIZE_GLOBAL_DISCRIMINATOR);
         args.serialize(&mut ix_data)?;
+        
         ix_accounts.extend([
             AccountMeta::new(user, true),
             AccountMeta::new(global_config, false),
