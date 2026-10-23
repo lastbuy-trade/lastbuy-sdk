@@ -35,3 +35,10 @@ instructions = [
 ]
 # includes pda
 pda = ["solana-pubkey/curve25519"]
+
+[dev-dependencies]
+dotenvy = "0.15.7"
+tokio = { version = "1.54.1", features = ["rt-multi-thread", "macros"] }
+solana-client = "4.3.2"
+solana-transaction = "6.0.0"
+solana-keypair = "4.0.0"

@@ -1,3 +1,4 @@
 target/
 docs/superpowers/plans
 .vscode
+.env
