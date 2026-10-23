@@ -232,6 +232,7 @@ dependencies = [
  "solana-instruction 4.0.0",
  "solana-pubkey 4.4.0",
  "spl-associated-token-account-interface",
+ "thiserror",
 ]
 
 [[package]]
