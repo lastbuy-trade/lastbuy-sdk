@@ -20,6 +20,7 @@ pub mod ids {
 
         // no need to add extra interface crates just for addresses
         pub const SYSTEM_PROGRAM_ID: Pubkey = pubkey!("11111111111111111111111111111111");
+        pub const UPGRADEABLE_LOADER_PROGRAM_ID: Pubkey = pubkey!("BPFLoaderUpgradeab1e11111111111111111111111");
         pub const SPL_TOKEN_PROGRAM_ID: Pubkey = pubkey!("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA");
         pub const SPL_TOKEN_2022_PROGRAM_ID: Pubkey = pubkey!("TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb");
         pub const SPL_ATA_PROGRAM_ID: Pubkey = spl_associated_token_account_interface::program::id();
