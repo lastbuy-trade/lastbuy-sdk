@@ -1,4 +1,4 @@
-//! Types nested inside account structs (`GlobalConfig`, `CurveState`)
+//! Shared types used by accounts and instruction args
 
 use borsh::{BorshDeserialize, BorshSerialize};
 use solana_pubkey::Pubkey;

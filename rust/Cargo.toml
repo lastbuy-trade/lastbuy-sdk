@@ -18,13 +18,16 @@ full = ["events", "accounts", "instructions", "pda"]
 dev = ["instructions"]
 # incluses events
 events = ["dep:borsh", "borsh/derive", "solana-pubkey/borsh"]
+# includes types
+types = ["dep:borsh", "borsh/derive", "solana-pubkey/borsh"]
 # includes accounts
-accounts = ["dep:borsh", "borsh/derive", "solana-pubkey/borsh"]
+accounts = ["types"]
 # includes instructions
 instructions = [
     "dep:solana-instruction",
     "dep:spl-associated-token-account-interface", 
-    "pda"
+    "pda",
+    "types"
 ]
 # includes pda
 pda = ["solana-pubkey/curve25519"]

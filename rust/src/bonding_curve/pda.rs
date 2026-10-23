@@ -80,3 +80,12 @@ pub fn derive_nft_mint(curve: &Pubkey) -> (Pubkey, u8) {
         &PROGRAM_ID
     )
 }
+
+pub fn derive_program_data() -> (Pubkey, u8) {
+    Pubkey::find_program_address(
+        &[
+            PROGRAM_ID.as_ref()
+        ], 
+        &UPGRADEABLE_LOADER_PROGRAM_ID
+    )
+}

@@ -1,9 +1,7 @@
 use borsh::{BorshDeserialize, BorshSerialize};
 
-use crate::constants::*;
+use crate::{constants::*, types::*};
 use crate::extentions::Discriminator;
-
-use super::types::{AdminConfig, FeeConfig, ProtocolConfig, RaydiumConfig};
 
 /// Global protocol configuration account
 ///

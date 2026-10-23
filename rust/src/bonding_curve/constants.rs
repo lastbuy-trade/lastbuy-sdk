@@ -14,7 +14,6 @@ pub mod ids {
 
     pub const PROGRAM_ID: Pubkey = pubkey!("Lbuyii1PVUvt9xToGuyUf6CQCDbdRRzzo8SsHuNYMkf");
     
-    #[cfg(feature = "instructions")]
     pub mod programs {
         use super::*;
 
@@ -23,6 +22,7 @@ pub mod ids {
         pub const UPGRADEABLE_LOADER_PROGRAM_ID: Pubkey = pubkey!("BPFLoaderUpgradeab1e11111111111111111111111");
         pub const SPL_TOKEN_PROGRAM_ID: Pubkey = pubkey!("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA");
         pub const SPL_TOKEN_2022_PROGRAM_ID: Pubkey = pubkey!("TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb");
+        #[cfg(feature = "instructions")]
         pub const SPL_ATA_PROGRAM_ID: Pubkey = spl_associated_token_account_interface::program::id();
     } 
 }

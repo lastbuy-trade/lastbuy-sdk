@@ -8,6 +8,8 @@ pub mod instructions;
 pub mod extentions;
 #[cfg(feature = "pda")]
 pub mod pda;
+#[cfg(feature = "types")]
+pub mod types;
 
 pub use constants::*;
 #[cfg(feature = "accounts")]
@@ -19,3 +21,5 @@ pub use instructions::*;
 pub use extentions::*;
 #[cfg(feature = "pda")]
 pub use pda::*;
+#[cfg(feature = "types")]
+pub use types::*;

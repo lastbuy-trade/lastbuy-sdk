@@ -1,10 +1,8 @@
 use borsh::{BorshDeserialize, BorshSerialize};
 use solana_pubkey::Pubkey;
 
-use crate::constants::*;
+use crate::{constants::*, types::*};
 use crate::extentions::Discriminator;
-
-use super::types::CurveStatus;
 
 /// Bonding curve state account
 ///
