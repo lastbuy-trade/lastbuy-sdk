@@ -23,6 +23,10 @@ impl Discriminator for InitializeGlobalInstruction {
     const DISCRIMINATOR: [u8; ANCHOR_DISCRIMINATOR_SIZE] = INITIALIZE_GLOBAL_DISCRIMINATOR;
 }
 
+impl AccountCounts for InitializeGlobalInstruction {
+    const ACCOUNTS: usize = INITIALIZE_GLOBAL_ACCOUNTS;
+}
+
 impl InitializeGlobalInstruction {
     pub fn new(
         ctx: InitializeGlobalInstructionCtx, 

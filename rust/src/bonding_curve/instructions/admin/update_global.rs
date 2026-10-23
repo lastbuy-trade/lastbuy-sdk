@@ -7,7 +7,7 @@ use solana_pubkey::Pubkey;
 pub struct UpdateGlobalInstruction;
 
 pub struct UpdateGlobalCtx {
-    pub user: Pubkey
+    pub user: Pubkey,
 }
 
 #[derive(borsh::BorshSerialize)]
@@ -21,6 +21,10 @@ pub struct UpdateGlobalArgs {
 
 impl Discriminator for UpdateGlobalInstruction {
     const DISCRIMINATOR: [u8; ANCHOR_DISCRIMINATOR_SIZE] = UPDATE_GLOBAL_DISCRIMINATOR;
+}
+
+impl AccountCounts for UpdateGlobalInstruction {
+    const ACCOUNTS: usize = UPDATE_GLOBAL_ACCOUNTS;
 }
 
 impl UpdateGlobalInstruction {

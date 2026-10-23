@@ -16,6 +16,10 @@ impl Discriminator for EmergencyDrainCurveInstruction {
     const DISCRIMINATOR: [u8; ANCHOR_DISCRIMINATOR_SIZE] = EMERGENCY_DRAIN_CURVE_DISCRIMINATOR;
 }
 
+impl AccountCounts for EmergencyDrainCurveInstruction {
+    const ACCOUNTS: usize = EMERGENCY_DRAIN_CURVE_ACCOUNTS;
+}
+
 impl EmergencyDrainCurveInstruction {
     pub fn new(EmergencyDrainCurveInstructionCtx { 
         user, 
