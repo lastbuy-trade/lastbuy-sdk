@@ -159,3 +159,21 @@ fn test_raydium_cpmm_authority_derivation() -> Result<(), Box<dyn std::error::Er
 
     Ok(())
 }
+
+#[test]
+#[ignore]
+fn test_raydium_lock_authority_derivation() -> Result<(), Box<dyn std::error::Error>> {
+    let lock_cp_program_id = pubkey!("LockrWmn6K5twhz3y9w1dQERbmgSaRkfnTeTKbpofwE");
+    let seed = "lock_cp_authority_seed"; 
+    
+    let expected = pubkey!("3f7GcQFG397GAaEnv51zR6tsTVihYRydnydDD1cXekxH");
+    
+    let derived = Pubkey::find_program_address(
+        &[seed.as_ref()], 
+        &lock_cp_program_id
+    ).0;
+
+    assert_eq!(expected, derived);
+
+    Ok(())
+}
