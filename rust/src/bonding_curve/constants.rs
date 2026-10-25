@@ -175,6 +175,7 @@ pub mod discriminators {
 pub mod seeds {
     pub use raydium_cpmm::*;
     pub use raydium_lock::*;
+    pub use mpl_token_metadata::*;
     
     pub const GLOBAL_CONFIG_SEED: &str = "global_config";
 
@@ -204,6 +205,10 @@ pub mod seeds {
 
     pub mod raydium_lock {
         pub const RAYDIUM_LOCK_LIQUIDITY_SEED: &str = "locked_liquidity";
+    }
+
+    pub mod mpl_token_metadata {
+        pub const MPL_TOKEN_METADATA_SEED: &str = "metadata";
     }
 }
 
