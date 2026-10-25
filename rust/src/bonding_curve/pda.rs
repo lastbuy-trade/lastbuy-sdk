@@ -89,3 +89,21 @@ pub fn derive_program_data() -> (Pubkey, u8) {
         &UPGRADEABLE_LOADER_PROGRAM_ID
     )
 }
+
+pub fn derive_raydium_cpmm_authority(program_id: &Pubkey) -> (Pubkey, u8) {
+    Pubkey::find_program_address(
+        &[
+            RAYDIUM_CPMM_AUTH_SEED.as_ref()
+        ], 
+        program_id
+    )
+}
+
+pub fn derive_raydium_lock_authority(program_id: &Pubkey) -> (Pubkey, u8) {
+    Pubkey::find_program_address(
+        &[
+            RAYDIUM_LOCK_AUTH_SEED.as_ref()
+        ], 
+        program_id
+    )
+}
