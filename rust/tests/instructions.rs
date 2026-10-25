@@ -141,3 +141,21 @@ async fn test_initialize_global() -> Result<(), Box<dyn std::error::Error>> {
 
     Ok(())
 }
+
+#[test]
+#[ignore]
+fn test_raydium_cpmm_authority_derivation() -> Result<(), Box<dyn std::error::Error>> {
+    let lock_cp_program_id = pubkey!("CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C");
+    let seed = "vault_and_lp_mint_auth_seed"; 
+    
+    let expected = pubkey!("GpMZbSM2GgvTKHJirzeGfMFoaZ8UR2X7F4v8vHTvxFbL");
+    
+    let derived = Pubkey::find_program_address(
+        &[seed.as_ref()], 
+        &lock_cp_program_id
+    ).0;
+
+    assert_eq!(expected, derived);
+
+    Ok(())
+}
