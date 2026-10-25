@@ -9,7 +9,9 @@ pub struct EmergencyDrainCurveInstruction;
 pub struct EmergencyDrainCurveInstructionCtx {
     pub user: Pubkey,
     pub mint: Pubkey,
-    pub recipient: Pubkey
+    pub recipient: Pubkey,
+    /// if `curve.migration_funder` is not None, this is required
+    pub migration_funder: Option<Pubkey>
 }
 
 impl Discriminator for EmergencyDrainCurveInstruction {
@@ -18,6 +20,7 @@ impl Discriminator for EmergencyDrainCurveInstruction {
 
 impl AccountCounts for EmergencyDrainCurveInstruction {
     const ACCOUNTS: usize = EMERGENCY_DRAIN_CURVE_ACCOUNTS;
+    const REMAINING_ACCOUNTS: usize = EMERGENCY_DRAIN_CURVE_REMAINING_ACCOUNTS;
 }
 
 impl EmergencyDrainCurveInstruction {
@@ -27,7 +30,8 @@ impl EmergencyDrainCurveInstruction {
         let EmergencyDrainCurveInstructionCtx { 
             user, 
             mint, 
-            recipient 
+            recipient,
+            migration_funder 
         } = ctx;
 
         let curve = derive_curve(&mint).0;
@@ -61,6 +65,10 @@ impl EmergencyDrainCurveInstruction {
             AccountMeta::new_readonly(SPL_ATA_PROGRAM_ID, false),
             AccountMeta::new_readonly(SYSTEM_PROGRAM_ID, false),
         ]);
+
+        if let Some(migration_funder) = migration_funder {
+            ix_accounts.push(AccountMeta::new(migration_funder, false));
+        }
 
         Instruction::new_with_bytes(
             PROGRAM_ID, 
