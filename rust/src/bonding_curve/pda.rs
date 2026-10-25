@@ -166,3 +166,14 @@ pub fn derive_raydium_lock_liquidity(
         program_id
     )
 }
+
+pub fn derive_mpl_token_metadata(nft_mint: &Pubkey) -> (Pubkey, u8) {
+    Pubkey::find_program_address(
+        &[
+            MPL_TOKEN_METADATA_SEED.as_ref(),
+            METADATA_PROGRAM_ID.as_ref(),
+            nft_mint.as_ref()
+        ], 
+        &METADATA_PROGRAM_ID
+    )
+}
