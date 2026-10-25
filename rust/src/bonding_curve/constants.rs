@@ -204,6 +204,7 @@ pub mod seeds {
     }
 
     pub mod raydium_lock {
+        pub const RAYDIUM_LOCK_AUTH_SEED: &str = "lock_cp_authority_seed";
         pub const RAYDIUM_LOCK_LIQUIDITY_SEED: &str = "locked_liquidity";
     }
 
