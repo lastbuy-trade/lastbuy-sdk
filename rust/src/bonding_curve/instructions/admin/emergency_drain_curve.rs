@@ -21,11 +21,15 @@ impl AccountCounts for EmergencyDrainCurveInstruction {
 }
 
 impl EmergencyDrainCurveInstruction {
-    pub fn new(EmergencyDrainCurveInstructionCtx { 
-        user, 
-        mint, 
-        recipient 
-    }: EmergencyDrainCurveInstructionCtx) -> Instruction {
+    pub fn new(
+        ctx: EmergencyDrainCurveInstructionCtx
+    ) -> Instruction {
+        let EmergencyDrainCurveInstructionCtx { 
+            user, 
+            mint, 
+            recipient 
+        } = ctx;
+
         let curve = derive_curve(&mint).0;
         let global_config = derive_global_config().0;
 
