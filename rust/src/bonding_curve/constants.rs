@@ -291,6 +291,14 @@ pub mod account_counts {
     pub const UPDATE_GLOBAL_ACCOUNTS: usize = 2;
 
     pub mod remaining {
-        // todo
+        pub const BUY_EXACT_REMAINING_ACCOUNTS: usize = 2;
+        pub const SELL_EXACT_REMAINING_ACCOUNTS: usize = 2;
+        /// optional
+        /// 
+        /// if *curve.migration_funder* is not None, this must be taken into account
+        pub const EMERGENCY_DRAIN_CURVE_REMAINING_ACCOUNTS: usize = 1;
+        pub const CLAIM_CREATOR_FEE_REMAINING_ACCOUNTS: usize = 9;
+        pub const MIGRATE_REMAINING_ACCOUNTS: usize = 11;
+        pub const PREPARE_MIGRATION_REMAINING_ACCOUNTS: usize = 2;
     }
 }
