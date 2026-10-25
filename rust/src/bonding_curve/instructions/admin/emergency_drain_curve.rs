@@ -41,7 +41,7 @@ impl EmergencyDrainCurveInstruction {
         );
 
         let mut ix_data: [u8; EMERGENCY_DRAIN_CURVE_SIZE] = [0u8; EMERGENCY_DRAIN_CURVE_SIZE]; 
-        let mut ix_accounts = Vec::with_capacity(Self::ACCOUNTS); 
+        let mut ix_accounts = Vec::with_capacity(Self::TOTAL_ACCOUNTS); 
 
         ix_data[..ANCHOR_DISCRIMINATOR_SIZE].copy_from_slice(&Self::DISCRIMINATOR);
         ix_accounts.extend([
