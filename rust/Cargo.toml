@@ -38,7 +38,7 @@ pda = ["solana-pubkey/curve25519"]
 
 [dev-dependencies]
 dotenvy = "0.15.7"
-tokio = { version = "1.54.1", features = ["rt-multi-thread", "macros"] }
+tokio = { version = "1.54.1", features = ["rt-multi-thread", "macros", "time"] }
 solana-rpc-client = "4.3.0"
 solana-transaction = { version = "4.3.0", features = ["wincode"] }
 solana-message = "4.3.0"
