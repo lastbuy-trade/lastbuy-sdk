@@ -40,7 +40,6 @@ const TEST_LAST_BUY_TIMER_SECS: i64 = 0;
 const TEST_MIGRATION_THRESHOLD_SOL: u64 = 1_000_000_000; // 1 SOL
 const TEST_RAYDIUM_CPMM_MIGRATION_COVERAGE_SOL: u64 = 200_000_000; // 0.2 SOL
 const TEST_BUY_SOL: u64 = 10_000_000; // 0.01 SOL
-const TEST_SELL_TOKENS: u64 = 1; // 1 base unit
 
 // https://github.com/raydium-io/raydium-sdk-V2/blob/master/src/common/programId.ts
 // mainnet
@@ -716,7 +715,23 @@ async fn test_sell_exact() -> Result<(), Box<dyn std::error::Error>> {
     .await?;
 
     buy(&env, &fixture, TEST_BUY_SOL, 0).await?;
-    sell(&env, &fixture, TEST_SELL_TOKENS, 0).await?;
+
+    let ata = spl_associated_token_account_interface::address::get_associated_token_address_with_program_id(
+        &env.payer_pubkey(), 
+        &fixture.mint.pubkey(), 
+        &SPL_TOKEN_2022_PROGRAM_ID
+    );
+
+    let tokens_balance = env
+        .rpc
+        .get_token_account_balance(&ata)
+        .await?
+        .amount
+        .parse::<u64>()?;
+
+    println!("tokens to be sold: {}", tokens_balance);
+
+    sell(&env, &fixture, tokens_balance, 0).await?;
 
     let curve = fetch_curve(&env, &fixture.curve).await?;
     assert!(curve.real_reserves_tokens > 0);
