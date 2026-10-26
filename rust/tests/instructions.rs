@@ -100,11 +100,14 @@ impl TestEnv {
         );
         let payer = Keypair::read_from_file(std::env::var("TEST_PAYER_PATH")?)?;
 
+        let random_fee_recipient_1 = Keypair::new();
+        let random_fee_recipient_2 = Keypair::new();
+
         Ok(Self {
             rpc,
             payer,
-            fee_recipient_1: Pubkey::new_from_array([1; 32]),
-            fee_recipient_2: Pubkey::new_from_array([2; 32]),
+            fee_recipient_1: random_fee_recipient_1.pubkey(),
+            fee_recipient_2: random_fee_recipient_2.pubkey(),
         })
     }
 
@@ -112,17 +115,41 @@ impl TestEnv {
         self.payer.pubkey()
     }
 
+    /// funds payer & fee recipient accounts (system accounts must be initialized)
     async fn ensure_funded(&self, min_lamports: u64) -> Result<(), Box<dyn std::error::Error>> {
-        let mut balance = self.rpc.get_balance(&self.payer_pubkey()).await?;
+        let payer = self.payer_pubkey();
 
-        while balance < min_lamports {
-            let chunk = (min_lamports - balance).min(1_000_000_000);
-            self.rpc
-                .request_airdrop(&self.payer_pubkey(), chunk)
-                .await?;
+        let rent_exempt_minimum = self
+            .rpc
+            .get_minimum_balance_for_rent_exemption(0)
+            .await?;
 
-            tokio::time::sleep(std::time::Duration::from_millis(500)).await;
-            balance = self.rpc.get_balance(&self.payer_pubkey()).await?;
+        let targets = [
+            payer,
+            self.fee_recipient_1,
+            self.fee_recipient_2,
+        ];
+
+        for pubkey in targets {
+            let required_balance = if pubkey == payer {
+                min_lamports
+            } else {
+                rent_exempt_minimum
+            };
+
+            let mut balance = self.rpc.get_balance(&pubkey).await?;
+
+            while balance < required_balance {
+                let chunk = (required_balance - balance).min(1_000_000_000);
+
+                self.rpc
+                    .request_airdrop(&pubkey, chunk)
+                    .await?;
+
+                tokio::time::sleep(std::time::Duration::from_millis(500)).await;
+
+                balance = self.rpc.get_balance(&pubkey).await?;
+            }
         }
 
         Ok(())
