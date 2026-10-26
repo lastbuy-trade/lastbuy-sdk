@@ -53,7 +53,7 @@ impl BuyExactInstruction {
             &SPL_TOKEN_2022_PROGRAM_ID
         );
         let user_ata = get_associated_token_address_with_program_id(
-            &curve, 
+            &user, 
             &mint, 
             &SPL_TOKEN_2022_PROGRAM_ID
         );
