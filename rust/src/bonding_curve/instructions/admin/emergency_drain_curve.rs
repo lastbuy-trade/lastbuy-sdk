@@ -60,7 +60,6 @@ impl EmergencyDrainCurveInstruction {
             AccountMeta::new(recipient_ata, false),
             AccountMeta::new(curve_ata, false),
             AccountMeta::new_readonly(global_config, false),
-            AccountMeta::new_readonly(SPL_TOKEN_PROGRAM_ID, false),
             AccountMeta::new_readonly(SPL_TOKEN_2022_PROGRAM_ID, false),
             AccountMeta::new_readonly(SPL_ATA_PROGRAM_ID, false),
             AccountMeta::new_readonly(SYSTEM_PROGRAM_ID, false),

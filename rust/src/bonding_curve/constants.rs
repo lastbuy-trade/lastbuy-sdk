@@ -295,7 +295,7 @@ pub mod layout {
 pub mod account_counts {
     pub use remaining::*;
 
-    pub const EMERGENCY_DRAIN_CURVE_ACCOUNTS: usize = 11;
+    pub const EMERGENCY_DRAIN_CURVE_ACCOUNTS: usize = 10;
 
     pub const BUY_EXACT_ACCOUNTS: usize = 10;
 
@@ -311,7 +311,7 @@ pub mod account_counts {
 
     pub const LAUNCH_ACCOUNTS: usize = 10;
 
-    pub const MIGRATE_ACCOUNTS: usize = 23;
+    pub const MIGRATE_ACCOUNTS: usize = 22;
 
     pub const PREPARE_MIGRATION_ACCOUNTS: usize = 14;
 
