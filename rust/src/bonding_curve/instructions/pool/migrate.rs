@@ -4,10 +4,23 @@ use solana_instruction::{Instruction, AccountMeta};
 use solana_pubkey::Pubkey;
 use spl_associated_token_account_interface::address::get_associated_token_address_with_program_id;
 
+/// # IMPORTANT
+/// 
+/// * ### only V1 transactions can handle these instructions, solana core must be >= 4.0.0
+///
+/// * ### must be called in pair with [`super::PrepareMigrationInstruction`]
+///
+/// * ### order matters. example:
+///  
+/// instruction-1: PrepareMigrationInstruction
+/// 
+/// instruction-2: MigrateInstruction
 pub struct MigrateInstruction;
 
 pub struct MigrateInstructionCtx {
     /// is_signer: true
+    /// 
+    /// Can be any user either migration watcher or external bot
     pub user: Pubkey,
     /// - Can be distinct from `user`
     /// - Can be fetched from `curve` PDA
