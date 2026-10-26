@@ -94,7 +94,10 @@ impl TestEnv {
     async fn new() -> Result<Self, Box<dyn std::error::Error>> {
         dotenvy::dotenv().ok();
 
-        let rpc = RpcClient::new(std::env::var("TEST_RPC_URL")?);
+        let rpc = RpcClient::new_with_commitment(
+            std::env::var("TEST_RPC_URL")?, 
+            solana_rpc_client::api::config::CommitmentConfig { commitment: solana_rpc_client::api::config::CommitmentLevel::Confirmed }
+        );
         let payer = Keypair::read_from_file(std::env::var("TEST_PAYER_PATH")?)?;
 
         Ok(Self {
