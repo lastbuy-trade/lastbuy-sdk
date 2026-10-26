@@ -147,11 +147,10 @@ impl TestEnv {
         )?;
 
         let tx = VersionedTransaction::try_new(VersionedMessage::V1(message), signers)?;
-        let signature = self.rpc.send_transaction(&tx).await?;
-
-        self.rpc.confirm_transaction(&signature).await?;
-
-        Ok(signature.to_string())
+        
+        let sig = self.rpc.send_and_confirm_transaction(&tx).await?;
+        
+        Ok(sig.to_string())
     }
 }
 
@@ -272,8 +271,41 @@ fn decode_account<T: BorshDeserialize>(data: &[u8]) -> Result<T, Box<dyn std::er
     Ok(T::try_from_slice(&data[ANCHOR_DISCRIMINATOR_SIZE..])?)
 }
 
-async fn fetch_global_config(env: &TestEnv) -> Result<GlobalConfig, Box<dyn std::error::Error>> {
-    let data = env.rpc.get_account_data(&derive_global_config().0).await?;
+/// `commitment_config` - if not defined , default is Processed
+async fn fetch_account_data_with_commitment(
+    env: &TestEnv,
+    pubkey: &Pubkey,
+    commitment_config: Option<solana_rpc_client::api::config::CommitmentConfig>  
+) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
+    let response = env
+        .rpc
+        .get_account_with_commitment(
+            pubkey,
+            commitment_config
+                .unwrap_or(solana_rpc_client::api::config::CommitmentConfig { 
+                    commitment: solana_rpc_client::api::config::CommitmentLevel::Processed 
+                })
+        )
+        .await?;
+
+    let account = response
+        .value
+        .ok_or_else(|| format!("Account not found: {pubkey}"))?;
+
+    Ok(account.data)
+}
+
+async fn fetch_account_data(
+    env: &TestEnv,
+    pubkey: &Pubkey,
+) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
+    fetch_account_data_with_commitment(env, pubkey, None).await
+}
+
+async fn fetch_global_config(
+    env: &TestEnv,
+) -> Result<GlobalConfig, Box<dyn std::error::Error>> {
+    let data = fetch_account_data(env, &derive_global_config().0).await?;
     decode_account(&data)
 }
 
@@ -281,7 +313,7 @@ async fn fetch_curve(
     env: &TestEnv,
     curve: &Pubkey,
 ) -> Result<CurveState, Box<dyn std::error::Error>> {
-    let data = env.rpc.get_account_data(curve).await?;
+    let data = fetch_account_data(env, curve).await?;
     decode_account(&data)
 }
 
@@ -289,7 +321,7 @@ async fn fetch_prize_pool(
     env: &TestEnv,
     prize_pool: &Pubkey,
 ) -> Result<PrizePool, Box<dyn std::error::Error>> {
-    let data = env.rpc.get_account_data(prize_pool).await?;
+    let data = fetch_account_data(env, prize_pool).await?;
     decode_account(&data)
 }
 
@@ -297,7 +329,7 @@ async fn fetch_pool_creator_state(
     env: &TestEnv,
     pool_creator_state: &Pubkey,
 ) -> Result<PoolCreatorState, Box<dyn std::error::Error>> {
-    let data = env.rpc.get_account_data(pool_creator_state).await?;
+    let data = fetch_account_data(env, pool_creator_state).await?;
     decode_account(&data)
 }
 
