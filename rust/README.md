@@ -7,7 +7,7 @@ This crate provides instruction builders, PDA derivation helpers, account/event 
 An optional high-level client is planned and will live in this crate behind the `client` feature flag.
 
 ## Program
-- Program ID: `Lbuyii1PVUvt9xToGuyUf6CQCDbdRRzzo8SsHuNYMkf`
+- Program ID: `Lbuyii1PVUvt9xToGuyUf6CQCDbdRRzzo8SsHuNYMkf` (same on mainnet-beta, devnet, and testnet)
 
 ## Installation
 
