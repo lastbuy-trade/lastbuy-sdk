@@ -871,6 +871,7 @@ async fn test_prepare_migration_and_migrate() -> Result<(), Box<dyn std::error::
     Ok(())
 }
 
+// does not claim any fee, since no CPMM trades are executed during this test
 #[tokio::test]
 #[ignore]
 async fn test_claim_creator_fee() -> Result<(), Box<dyn std::error::Error>> {
