@@ -2,6 +2,12 @@
 name = "lastbuy-sdk"
 version = "0.1.0"
 edition = "2024"
+description = "Low-level Rust SDK for the LastBuy bonding curve Solana program (instruction builders, PDAs, account/event types, constants)."
+license = "Apache-2.0"
+repository = "https://github.com/lastbuy-trade/lastbuy-sdk"
+readme = "README.md"
+keywords = ["solana", "anchor", "bonding-curve", "sdk", "lastbuy"]
+categories = ["api-bindings", "cryptography::cryptocurrencies"]
 
 [dependencies]
 solana-pubkey = "4.4.0" 
