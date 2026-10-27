@@ -195,12 +195,9 @@ pub mod seeds {
 
     pub mod raydium_cpmm {
         pub const RAYDIUM_CPMM_AUTH_SEED: &str = "vault_and_lp_mint_auth_seed";
-        pub const RAYDIUM_CPMM_AMM_CONFIG_SEED: &str = "amm_config";
-        pub const RAYDIUM_CPMM_POOL_SEED: &str = "pool";
         pub const RAYDIUM_CPMM_POOL_LP_MINT_SEED: &str = "pool_lp_mint";
         pub const RAYDIUM_CPMM_POOL_VAULT_SEED: &str = "pool_vault";
         pub const RAYDIUM_CPMM_OBSERVATION_SEED: &str = "observation";
-        pub const RAYDIUM_CPMM_PERMISSION_SEED: &str = "permission";
     }
 
     pub mod raydium_lock {
