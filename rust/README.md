@@ -59,9 +59,10 @@ use solana_pubkey::Pubkey;
 
 let ctx = BuyExactInstructionCtx {
     user: user_pubkey,
-    // can be fetched from `curve` PDA
+    // curve creator can be fetched from `curve` PDA
     creator: curve_creator_pubkey,
     mint: mint_pubkey,
+    // fee recipients can be fetched from `global_config` PDA
     fee_recipient_1: fee1_pubkey,
     fee_recipient_2: fee2_pubkey,
 };
@@ -76,6 +77,40 @@ let ix = BuyExactInstruction::new(ctx, args)?;
 ```rust
 use lastbuy_sdk::constants::{CURVE_STATE_DISCRIMINATOR, BUY_EXACT_SIZE};
 ```
+
+## Examples
+
+The [`examples/`](./examples) directory contains minimal, runnable examples that send transactions to a Solana RPC. Each example shows only the logic for that instruction and its direct dependencies.
+
+### Prerequisites
+
+Create a `.env` file in `rust/` with:
+
+```env
+TEST_RPC_URL=https://api.devnet.solana.com
+TEST_PAYER_PATH=/path/to/your/keypair.json
+```
+
+Assumptions:
+- The global config is already initialized.
+- The payer and fee recipients are already funded (no airdrops).
+- Replace placeholder pubkeys in each example with values relevant to your setup.
+
+### Running examples
+
+```bash
+cd rust
+cargo run --example launch
+cargo run --example buy_exact
+cargo run --example sell_exact
+cargo run --example fund_migration
+cargo run --example define_winner_idempotent
+cargo run --example claim_prize_idempotent
+cargo run --example claim_creator_fee
+cargo run --example migrate  # runs prepare_migration + migrate together
+```
+
+> **Note:** These examples hit a real RPC and mutate on-chain state. Use devnet and a dedicated test keypair. Admin/dev-gated instructions are not included.
 
 ## Notes
 - This is a **low-level** crate: it builds `solana_instruction::Instruction`s and derives accounts/PDAs, but does not send transactions, manage signers/wallets, or do RPC calls.
