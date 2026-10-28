@@ -1,37 +1,12 @@
-use borsh::BorshDeserialize;
-use lastbuy_sdk::{accounts::*, constants::*, instructions::*, pda::*};
+mod common;
+
+use common::*;
+use lastbuy_sdk::{instructions::*, pda::*};
 use solana_keypair::{EncodableKey, Keypair, Signer};
 use solana_message::{v1::{Message as V1Message, TransactionConfig}, VersionedMessage};
 use solana_pubkey::{pubkey, Pubkey};
 use solana_rpc_client::nonblocking::rpc_client::RpcClient;
 use solana_transaction::versioned::VersionedTransaction;
-
-fn decode_account<T: BorshDeserialize>(data: &[u8]) -> Result<T, Box<dyn std::error::Error>> {
-    Ok(T::try_from_slice(&data[ANCHOR_DISCRIMINATOR_SIZE..])?)
-}
-
-async fn fetch_account_data(rpc: &RpcClient, pubkey: &Pubkey) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
-    let response = rpc
-        .get_account_with_commitment(
-            pubkey,
-            solana_rpc_client::api::config::CommitmentConfig {
-                commitment: solana_rpc_client::api::config::CommitmentLevel::Processed,
-            },
-        )
-        .await?;
-    let account = response.value.ok_or_else(|| format!("Account not found: {pubkey}"))?;
-    Ok(account.data)
-}
-
-async fn fetch_global_config(rpc: &RpcClient) -> Result<GlobalConfig, Box<dyn std::error::Error>> {
-    let data = fetch_account_data(rpc, &derive_global_config().0).await?;
-    decode_account(&data)
-}
-
-async fn fetch_curve(rpc: &RpcClient, curve: &Pubkey) -> Result<CurveState, Box<dyn std::error::Error>> {
-    let data = fetch_account_data(rpc, curve).await?;
-    decode_account(&data)
-}
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -54,8 +29,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let mint: Pubkey = pubkey!("11111111111111111111111111111111"); // your mint here
     let curve: Pubkey = derive_curve(&mint).0;
-    let curve_state: CurveState = fetch_curve(&rpc, &curve).await?;
-    let global_config: GlobalConfig = fetch_global_config(&rpc).await?;
+    let curve_state = fetch_curve(&rpc, &curve).await?;
+    let global_config = fetch_global_config(&rpc).await?;
 
     let migration_funder = curve_state.migration_funder;
     let creator = curve_state.creator;
