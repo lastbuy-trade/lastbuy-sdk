@@ -1,7 +1,7 @@
 mod common;
 
 use common::*;
-use lastbuy_sdk::{instructions::*, pda::*};
+use lastbuy_sdk::{SPL_TOKEN_2022_PROGRAM_ID, SPL_TOKEN_PROGRAM_ID, WSOL_ID, instructions::*, pda::*};
 use solana_keypair::{EncodableKey, Keypair, Signer};
 use solana_message::{v1::{Message as V1Message, TransactionConfig}, VersionedMessage};
 use solana_pubkey::{pubkey, Pubkey};
@@ -41,6 +41,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let raydium_cpmm_program = global_config.raydium.raydium_cpmm_program;
     let raydium_lock_program = global_config.raydium.raydium_lock_program;
 
+    // create pool_creator_token_account_0 & pool_creator_token_account_1
+    let pool_creator = derive_pool_creator(&migration_funder, &curve).0;
+    let ata_0_ix = create_ata_ix(&payer.pubkey(), &pool_creator, &WSOL_ID, &SPL_TOKEN_PROGRAM_ID);
+    let ata_1_ix = create_ata_ix(&payer.pubkey(), &pool_creator, &mint, &SPL_TOKEN_2022_PROGRAM_ID);
+
     // prepare_migration must be called before migrate
     let prepare_ix = PrepareMigrationInstruction::new(PrepareMigrationInstructionCtx {
         user: payer.pubkey(),
@@ -65,7 +70,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let tx_config = TransactionConfig::empty()
         .with_compute_unit_limit(1_400_000)
         .with_loaded_accounts_data_size_limit(64 * 1024 * 1024);
-    let message = V1Message::try_compile_with_config(&payer.pubkey(), &[prepare_ix, migrate_ix], recent_blockhash, tx_config)?;
+    let message = V1Message::try_compile_with_config(
+        &payer.pubkey(), 
+        &[ata_0_ix, ata_1_ix, prepare_ix, migrate_ix], 
+        recent_blockhash, 
+        tx_config
+    )?;
     let tx = VersionedTransaction::try_new(VersionedMessage::V1(message), &[&payer])?;
     let sig = rpc.send_and_confirm_transaction(&tx).await?;
     println!("PrepareMigration + Migrate tx: {}", sig);
