@@ -813,7 +813,8 @@ async fn test_claim_prize_idempotent() -> Result<(), Box<dyn std::error::Error>>
 
     let prize_pool = fetch_prize_pool(&env, &fixture.prize_pool).await?;
     assert!(prize_pool.is_claimed);
-    assert_eq!(prize_pool.amount_sol, 0);
+    // no longer decrement `amount_sol` on claim to be able to check prize amount onchain anytime (even if it was claimed) 
+    assert_eq!(prize_pool.amount_sol, 70000);
 
     Ok(())
 }
