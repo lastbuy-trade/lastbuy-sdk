@@ -1,3 +1,5 @@
+#![cfg(feature = "pda")]
+
 use lastbuy_sdk::pda::*;
 use solana_pubkey::{Pubkey, pubkey};
 
