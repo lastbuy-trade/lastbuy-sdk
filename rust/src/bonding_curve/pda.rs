@@ -78,6 +78,14 @@ pub fn derive_nft_mint(curve: &Pubkey) -> (Pubkey, u8) {
     )
 }
 
+pub fn derive_event_authority() -> (Pubkey, u8) {
+    find_this_pda(
+        &[
+            EVENT_AUTHORITY_SEED.as_ref()
+        ]
+    )
+}
+
 pub fn derive_program_data() -> (Pubkey, u8) {
     Pubkey::find_program_address(
         &[
