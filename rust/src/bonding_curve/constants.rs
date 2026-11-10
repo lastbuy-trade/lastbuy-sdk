@@ -292,27 +292,27 @@ pub mod layout {
 pub mod account_counts {
     pub use remaining::*;
 
-    pub const EMERGENCY_DRAIN_CURVE_ACCOUNTS: usize = 10;
+    pub const EMERGENCY_DRAIN_CURVE_ACCOUNTS: usize = 12;
 
-    pub const BUY_EXACT_ACCOUNTS: usize = 10;
+    pub const BUY_EXACT_ACCOUNTS: usize = 12;
 
-    pub const CLAIM_CREATOR_FEE_ACCOUNTS: usize = 21;
+    pub const CLAIM_CREATOR_FEE_ACCOUNTS: usize = 23;
 
-    pub const CLAIM_PRIZE_IDEMPOTENT_ACCOUNTS: usize = 5;
+    pub const CLAIM_PRIZE_IDEMPOTENT_ACCOUNTS: usize = 7;
 
-    pub const DEFINE_WINNER_IDEMPOTENT_ACCOUNTS: usize = 5;
+    pub const DEFINE_WINNER_IDEMPOTENT_ACCOUNTS: usize = 7;
 
-    pub const FUND_MIGRATION_ACCOUNTS: usize = 5;
+    pub const FUND_MIGRATION_ACCOUNTS: usize = 7;
 
     pub const INITIALIZE_GLOBAL_ACCOUNTS: usize = 5;
 
-    pub const LAUNCH_ACCOUNTS: usize = 10;
+    pub const LAUNCH_ACCOUNTS: usize = 12;
 
-    pub const MIGRATE_ACCOUNTS: usize = 22;
+    pub const MIGRATE_ACCOUNTS: usize = 24;
 
-    pub const PREPARE_MIGRATION_ACCOUNTS: usize = 14;
+    pub const PREPARE_MIGRATION_ACCOUNTS: usize = 16;
 
-    pub const SELL_EXACT_ACCOUNTS: usize = 10;
+    pub const SELL_EXACT_ACCOUNTS: usize = 12;
 
     pub const UPDATE_GLOBAL_ACCOUNTS: usize = 2;
 
