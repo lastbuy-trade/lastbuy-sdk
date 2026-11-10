@@ -24,3 +24,6 @@ pub struct MigrationEvent {
 impl Discriminator for MigrationEvent {
     const DISCRIMINATOR: [u8; ANCHOR_DISCRIMINATOR_SIZE] = MIGRATION_EVENT_DISCRIMINATOR;
 }
+
+#[cfg(feature = "parse-events")]
+impl super::parse::EventParser for MigrationEvent {}

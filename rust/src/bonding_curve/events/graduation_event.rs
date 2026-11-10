@@ -15,3 +15,6 @@ pub struct GraduationEvent {
 impl Discriminator for GraduationEvent {
     const DISCRIMINATOR: [u8; ANCHOR_DISCRIMINATOR_SIZE] = GRADUATION_EVENT_DISCRIMINATOR;
 }
+
+#[cfg(feature = "parse-events")]
+impl super::parse::EventParser for GraduationEvent {}

@@ -26,3 +26,6 @@ pub struct BuyEvent {
 impl Discriminator for BuyEvent {
     const DISCRIMINATOR: [u8; ANCHOR_DISCRIMINATOR_SIZE] = BUY_EVENT_DISCRIMINATOR;
 }
+
+#[cfg(feature = "parse-events")]
+impl super::parse::EventParser for BuyEvent {}

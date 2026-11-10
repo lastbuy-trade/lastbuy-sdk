@@ -18,3 +18,6 @@ pub struct DefineAlternativeWinnerEvent {
 impl Discriminator for DefineAlternativeWinnerEvent {
     const DISCRIMINATOR: [u8; ANCHOR_DISCRIMINATOR_SIZE] = DEFINE_ALTERNATIVE_WINNER_EVENT_DISCRIMINATOR;
 }
+
+#[cfg(feature = "parse-events")]
+impl super::parse::EventParser for DefineAlternativeWinnerEvent {}

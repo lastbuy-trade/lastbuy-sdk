@@ -26,3 +26,6 @@ pub struct ClaimCreatorFeeEvent {
 impl Discriminator for ClaimCreatorFeeEvent {
     const DISCRIMINATOR: [u8; ANCHOR_DISCRIMINATOR_SIZE] = CLAIM_CREATOR_FEE_EVENT_DISCRIMINATOR;
 }
+
+#[cfg(feature = "parse-events")]
+impl super::parse::EventParser for ClaimCreatorFeeEvent {}

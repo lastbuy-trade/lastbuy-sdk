@@ -10,6 +10,8 @@ pub mod launch_event;
 pub mod migration_event;
 pub mod prepare_migration_event;
 pub mod sell_event;
+#[cfg(feature = "parse-events")]
+pub mod parse;
 
 pub use buy_event::*;
 pub use claim_creator_fee_event::*;
@@ -23,3 +25,5 @@ pub use launch_event::*;
 pub use migration_event::*;
 pub use prepare_migration_event::*;
 pub use sell_event::*;
+#[cfg(feature = "parse-events")]
+pub use parse::*;

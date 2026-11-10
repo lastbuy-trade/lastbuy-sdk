@@ -20,3 +20,6 @@ pub struct EmergencyDrainCurveEvent {
 impl Discriminator for EmergencyDrainCurveEvent {
     const DISCRIMINATOR: [u8; ANCHOR_DISCRIMINATOR_SIZE] = EMERGENCY_DRAIN_CURVE_EVENT_DISCRIMINATOR;
 }
+
+#[cfg(feature = "parse-events")]
+impl super::parse::EventParser for EmergencyDrainCurveEvent {}

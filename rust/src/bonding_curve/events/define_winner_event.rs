@@ -17,3 +17,6 @@ pub struct DefineWinnerEvent {
 impl Discriminator for DefineWinnerEvent {
     const DISCRIMINATOR: [u8; ANCHOR_DISCRIMINATOR_SIZE] = DEFINE_WINNER_EVENT_DISCRIMINATOR;
 }
+
+#[cfg(feature = "parse-events")]
+impl super::parse::EventParser for DefineWinnerEvent {}

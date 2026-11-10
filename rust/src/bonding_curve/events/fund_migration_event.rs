@@ -17,3 +17,6 @@ pub struct FundMigrationEvent {
 impl Discriminator for FundMigrationEvent {
     const DISCRIMINATOR: [u8; ANCHOR_DISCRIMINATOR_SIZE] = FUND_MIGRATION_EVENT_DISCRIMINATOR;
 }
+
+#[cfg(feature = "parse-events")]
+impl super::parse::EventParser for FundMigrationEvent {}

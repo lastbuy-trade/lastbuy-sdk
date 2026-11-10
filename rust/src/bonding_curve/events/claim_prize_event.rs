@@ -17,3 +17,6 @@ pub struct ClaimPrizeEvent {
 impl Discriminator for ClaimPrizeEvent {
     const DISCRIMINATOR: [u8; ANCHOR_DISCRIMINATOR_SIZE] = CLAIM_PRIZE_EVENT_DISCRIMINATOR;
 }
+
+#[cfg(feature = "parse-events")]
+impl super::parse::EventParser for ClaimPrizeEvent {}

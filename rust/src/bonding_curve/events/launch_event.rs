@@ -19,3 +19,6 @@ pub struct LaunchEvent {
 impl Discriminator for LaunchEvent {
     const DISCRIMINATOR: [u8; ANCHOR_DISCRIMINATOR_SIZE] = LAUNCH_EVENT_DISCRIMINATOR;
 }
+
+#[cfg(feature = "parse-events")]
+impl super::parse::EventParser for LaunchEvent {}
