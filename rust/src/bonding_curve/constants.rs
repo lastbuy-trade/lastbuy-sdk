@@ -64,6 +64,11 @@ pub mod discriminators {
             [51, 88, 38, 85, 206, 166, 162, 156];
     }
 
+    #[cfg(feature = "parse-events")]
+    /// Anchor generated instruction's discriminator during `emit_cpi!`
+    pub const EVENT_DISCRIMINATOR: [u8; ANCHOR_DISCRIMINATOR_SIZE] =
+        [228, 69, 165, 46, 81, 203, 154, 29];
+    
     #[cfg(feature = "events")]
     pub mod events {
         use super::*;
