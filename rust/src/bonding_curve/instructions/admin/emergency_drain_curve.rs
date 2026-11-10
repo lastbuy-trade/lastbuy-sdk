@@ -47,6 +47,7 @@ impl EmergencyDrainCurveInstruction {
             &mint, 
             &SPL_TOKEN_2022_PROGRAM_ID
         );
+        let event_authority = derive_event_authority().0;
 
         let mut ix_data: [u8; EMERGENCY_DRAIN_CURVE_SIZE] = [0u8; EMERGENCY_DRAIN_CURVE_SIZE]; 
         let mut ix_accounts = Vec::with_capacity(Self::TOTAL_ACCOUNTS); 
@@ -63,6 +64,8 @@ impl EmergencyDrainCurveInstruction {
             AccountMeta::new_readonly(SPL_TOKEN_2022_PROGRAM_ID, false),
             AccountMeta::new_readonly(SPL_ATA_PROGRAM_ID, false),
             AccountMeta::new_readonly(SYSTEM_PROGRAM_ID, false),
+            AccountMeta::new_readonly(event_authority, false),
+            AccountMeta::new_readonly(PROGRAM_ID, false),
         ]);
 
         if let Some(migration_funder) = migration_funder {

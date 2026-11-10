@@ -26,6 +26,7 @@ impl DefineWinnerIdempotentInstruction {
         let global_config = derive_global_config().0;
         let prize_pool = derive_prize_pool(&derive_curve(&mint).0).0;
         let curve = derive_curve(&mint).0;
+        let event_authority = derive_event_authority().0;
 
         let mut ix_data: [u8; DEFINE_WINNER_IDEMPOTENT_SIZE] = [0u8; DEFINE_WINNER_IDEMPOTENT_SIZE];
         let mut ix_accounts: Vec<AccountMeta> = Vec::with_capacity(Self::TOTAL_ACCOUNTS);
@@ -37,6 +38,8 @@ impl DefineWinnerIdempotentInstruction {
             AccountMeta::new(prize_pool, false),
             AccountMeta::new(curve, false),
             AccountMeta::new_readonly(mint, false),
+            AccountMeta::new_readonly(event_authority, false),
+            AccountMeta::new_readonly(PROGRAM_ID, false),
         ]);
 
         Instruction::new_with_bytes(PROGRAM_ID, &ix_data, ix_accounts)

@@ -57,6 +57,7 @@ impl SellExactInstruction {
             &mint,
             &SPL_TOKEN_2022_PROGRAM_ID,
         );
+        let event_authority = derive_event_authority().0;
 
         let mut ix_data: Vec<u8> = Vec::with_capacity(SELL_EXACT_SIZE);
         let mut ix_accounts: Vec<AccountMeta> = Vec::with_capacity(Self::TOTAL_ACCOUNTS);
@@ -75,6 +76,8 @@ impl SellExactInstruction {
             AccountMeta::new(user_ata, false),
             AccountMeta::new_readonly(SPL_TOKEN_2022_PROGRAM_ID, false),
             AccountMeta::new_readonly(SYSTEM_PROGRAM_ID, false),
+            AccountMeta::new_readonly(event_authority, false),
+            AccountMeta::new_readonly(PROGRAM_ID, false),
             // remaining accounts
             AccountMeta::new(fee_recipient_1, false),
             AccountMeta::new(fee_recipient_2, false),

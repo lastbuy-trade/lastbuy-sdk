@@ -69,6 +69,7 @@ impl PrepareMigrationInstruction {
             &WSOL_ID,
             &SPL_TOKEN_PROGRAM_ID,
         );
+        let event_authority = derive_event_authority().0;
 
         let mut ix_data: [u8; PREPARE_MIGRATION_SIZE] = [0u8; PREPARE_MIGRATION_SIZE];
         let mut ix_accounts: Vec<AccountMeta> = Vec::with_capacity(Self::TOTAL_ACCOUNTS);
@@ -89,6 +90,8 @@ impl PrepareMigrationInstruction {
             AccountMeta::new_readonly(SPL_TOKEN_PROGRAM_ID, false),
             AccountMeta::new_readonly(SPL_TOKEN_2022_PROGRAM_ID, false),
             AccountMeta::new_readonly(SYSTEM_PROGRAM_ID, false),
+            AccountMeta::new_readonly(event_authority, false),
+            AccountMeta::new_readonly(PROGRAM_ID, false),
             // remaining accounts
             AccountMeta::new(fee_recipient_1, false),
             AccountMeta::new(fee_recipient_2, false),

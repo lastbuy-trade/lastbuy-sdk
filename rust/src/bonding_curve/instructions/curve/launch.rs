@@ -47,6 +47,7 @@ impl LaunchInstruction {
             &mint, 
             &SPL_TOKEN_2022_PROGRAM_ID
         );
+        let event_authority = derive_event_authority().0;
 
         // exact payload size cannot be known at compile time
         let mut ix_data: Vec<u8> = Vec::with_capacity(launch_size(
@@ -69,7 +70,9 @@ impl LaunchInstruction {
             AccountMeta::new(curve_ata, false),
             AccountMeta::new_readonly(SPL_TOKEN_2022_PROGRAM_ID, false),
             AccountMeta::new_readonly(SPL_ATA_PROGRAM_ID, false),
-            AccountMeta::new_readonly(SYSTEM_PROGRAM_ID, false)
+            AccountMeta::new_readonly(SYSTEM_PROGRAM_ID, false),
+            AccountMeta::new_readonly(event_authority, false),
+            AccountMeta::new_readonly(PROGRAM_ID, false),
         ]);
 
         Ok(Instruction::new_with_bytes(

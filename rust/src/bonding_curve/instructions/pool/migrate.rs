@@ -116,6 +116,7 @@ impl MigrateInstruction {
             &raydium_lp_mint, 
             &SPL_TOKEN_PROGRAM_ID
         );
+        let event_authority = derive_event_authority().0;
 
         let mut ix_data: [u8; MIGRATE_SIZE] = [0u8; MIGRATE_SIZE]; 
         let mut ix_accounts: Vec<AccountMeta> = Vec::with_capacity(Self::TOTAL_ACCOUNTS);
@@ -144,6 +145,8 @@ impl MigrateInstruction {
             AccountMeta::new_readonly(METADATA_PROGRAM_ID, false),
             AccountMeta::new_readonly(SYSTEM_PROGRAM_ID, false),
             AccountMeta::new_readonly(RENT_SYSVAR_ID, false),
+            AccountMeta::new_readonly(event_authority, false),
+            AccountMeta::new_readonly(PROGRAM_ID, false),
             // remaining accounts
             AccountMeta::new_readonly(raydium_cpmm_authority, false),
             AccountMeta::new_readonly(raydium_lock_authority, false),
