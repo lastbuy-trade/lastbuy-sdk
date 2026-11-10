@@ -193,6 +193,9 @@ pub mod seeds {
 
     pub const NFT_MINT_SEED: &str = "nft_mint";
 
+    /// Anchor event authority PDA seed used by `emit_cpi`
+    pub const EVENT_AUTHORITY_SEED: &str = "__event_authority";
+
     pub mod raydium_cpmm {
         pub const RAYDIUM_CPMM_AUTH_SEED: &str = "vault_and_lp_mint_auth_seed";
         pub const RAYDIUM_CPMM_POOL_LP_MINT_SEED: &str = "pool_lp_mint";
