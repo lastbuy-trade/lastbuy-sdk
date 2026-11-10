@@ -64,3 +64,15 @@ fn test_raydium_lock_authority_derivation() -> Result<(), Box<dyn std::error::Er
 
     Ok(())
 }
+
+#[test]
+#[ignore]
+fn test_event_authority_derivation() -> Result<(), Box<dyn std::error::Error>> {
+    let expected = pubkey!("2BsjbSpciWx78AFa21trRSdj18ZUdNj88xbFqq7M5SuT");
+    
+    let derived = derive_event_authority().0;
+
+    assert_eq!(expected, derived);
+
+    Ok(())
+}
