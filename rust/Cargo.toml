@@ -19,12 +19,21 @@ thiserror = { version = "2.0.21", optional = true }
 [features]
 default = ["full"]
 
-full = ["events", "accounts", "instructions", "pda", "error"]
+full = [
+    "events",
+    "parse-events", 
+    "accounts", 
+    "instructions", 
+    "pda", 
+    "error"
+]
 
 # includes `admin` ixs
 dev = ["instructions"]
 # incluses events
 events = ["dep:borsh", "borsh/derive", "solana-pubkey/borsh"]
+# includes events parsing
+parse-events = ["events", "error"]
 # includes types
 types = ["dep:borsh", "borsh/derive", "solana-pubkey/borsh"]
 # includes accounts
