@@ -6,7 +6,7 @@ Multi-language SDK for the LastBuy bonding curve program on Solana.
 
 | Package | Language | Status | Description |
 | --- | --- | --- | --- |
-| [`rust/`](./rust) | Rust | Available (`0.1.0`) | Low-level SDK: instruction builders, PDA derivation, account/event types, discriminators, and constants. |
+| [`rust/`](./rust) | Rust | Available (`0.2.0`) | Low-level SDK: instruction builders, PDA derivation, account/event types, discriminators, and constants. |
 | [`typescript/`](./typescript) | TypeScript | In progress | TypeScript client for interacting with the LastBuy bonding curve program. |
 
 ## Program

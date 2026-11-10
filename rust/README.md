@@ -15,14 +15,14 @@ Add to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-lastbuy-sdk = "0.1.0"
+lastbuy-sdk = "0.2.0"
 ```
 
 By default the crate enables the `full` feature set. You can trim dependencies via feature flags:
 
 ```toml
 [dependencies]
-lastbuy-sdk = { version = "0.1.0", default-features = false, features = ["instructions", "pda", "types"] }
+lastbuy-sdk = { version = "0.2.0", default-features = false, features = ["instructions", "pda", "types"] }
 ```
 
 ## Feature flags
@@ -33,6 +33,7 @@ lastbuy-sdk = { version = "0.1.0", default-features = false, features = ["instru
 | `instructions` | Instruction builders (`buy_exact`, `sell_exact`, `launch`, etc.), requires `pda`, `types`, `error` |
 | `accounts` | Account structs/deserialization helpers (`CurveState`, `GlobalConfig`, `PrizePool`, `PoolCreatorState`) |
 | `events` | Anchor event types and discriminators |
+| `parse-events` | Event instruction parsing, requires `events`, `error` |
 | `types` | Shared types (`FeeConfig`, `ProtocolConfig`, `AdminConfig`, `RaydiumConfig`, `CurveStatus`) |
 | `pda` | PDA derivation helpers for all program PDAs |
 | `error` | `SdkError` / `SdkResult` |
