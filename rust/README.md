@@ -15,14 +15,14 @@ Add to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-lastbuy-sdk = "0.2.0"
+lastbuy-sdk = "0.2.1"
 ```
 
 By default the crate enables the `full` feature set. You can trim dependencies via feature flags:
 
 ```toml
 [dependencies]
-lastbuy-sdk = { version = "0.2.0", default-features = false, features = ["instructions", "pda", "types"] }
+lastbuy-sdk = { version = "0.2.1", default-features = false, features = ["instructions", "pda", "types"] }
 ```
 
 ## Feature flags
@@ -116,7 +116,7 @@ cargo run --example migrate  # runs prepare_migration + migrate together
 ## Notes
 - This is a **low-level** crate: it builds `solana_instruction::Instruction`s and derives accounts/PDAs, but does not send transactions, manage signers/wallets, or do RPC calls.
 - Account fetching/deserialization is available via `accounts` feature; RPC integration is left to your client.
-- API may evolve as the program changes (following the `0.1.x` series).
+- API may evolve as the program changes (following the `0.2.x` series).
 
 ## License
 Apache-2.0
