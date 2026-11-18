@@ -15,14 +15,14 @@ Add to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-lastbuy-sdk = "0.2.1"
+lastbuy-sdk = "0.2.2"
 ```
 
 By default the crate enables the `full` feature set. You can trim dependencies via feature flags:
 
 ```toml
 [dependencies]
-lastbuy-sdk = { version = "0.2.1", default-features = false, features = ["instructions", "pda", "types"] }
+lastbuy-sdk = { version = "0.2.2", default-features = false, features = ["instructions", "pda", "types"] }
 ```
 
 ## Feature flags
