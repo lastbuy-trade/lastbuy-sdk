@@ -12,6 +12,8 @@ pub mod pda;
 pub mod types;
 #[cfg(feature = "error")]
 pub mod error;
+#[cfg(feature = "math")]
+pub mod math;
 
 pub use constants::*;
 #[cfg(feature = "accounts")]

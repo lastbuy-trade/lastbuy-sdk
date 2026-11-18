@@ -25,7 +25,8 @@ full = [
     "accounts", 
     "instructions", 
     "pda", 
-    "error"
+    "error",
+    "math"
 ]
 
 # includes `admin` ixs
@@ -40,6 +41,8 @@ types = ["dep:borsh", "borsh/derive", "solana-pubkey/borsh"]
 accounts = ["types"]
 # includes error
 error = ["dep:thiserror"]
+# includes integer curve and fee calculations
+math = ["error"]
 # includes instructions
 instructions = [
     "dep:solana-instruction",
