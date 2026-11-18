@@ -4,6 +4,8 @@ Low-level Rust SDK for the LastBuy bonding curve program on Solana.
 
 This crate provides instruction builders, PDA derivation helpers, account/event types, discriminators, constants, error types, and integer math for trading on the LastBuy bonding curve.
 
+Your client handles RPC calls, wallets and signers, and transaction submission.
+
 An optional high-level client is planned and will live in this crate behind the `client` feature flag.
 
 ## Program
@@ -15,14 +17,14 @@ Add to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-lastbuy-sdk = "0.2.2"
+lastbuy-sdk = "0.3.0"
 ```
 
 By default the crate enables the `full` feature set. You can trim dependencies via feature flags:
 
 ```toml
 [dependencies]
-lastbuy-sdk = { version = "0.2.2", default-features = false, features = ["instructions", "pda", "types"] }
+lastbuy-sdk = { version = "0.3.0", default-features = false, features = ["instructions", "pda", "types"] }
 ```
 
 ## Feature flags
@@ -31,7 +33,7 @@ lastbuy-sdk = { version = "0.2.2", default-features = false, features = ["instru
 | --- | --- |
 | `full` (default) | `events`, `parse-events`, `accounts`, `instructions`, `pda`, `error`, `math` |
 | `instructions` | Instruction builders (`buy_exact`, `sell_exact`, `launch`, etc.), requires `pda`, `types`, `error` |
-| `accounts` | Account structs/deserialization helpers (`CurveState`, `GlobalConfig`, `PrizePool`, `PoolCreatorState`) |
+| `accounts` | Borsh types for decoding account data (`CurveState`, `GlobalConfig`, `PrizePool`, `PoolCreatorState`) |
 | `events` | Anchor event types and discriminators |
 | `parse-events` | Event instruction parsing, requires `events`, `error` |
 | `types` | Shared types (`FeeConfig`, `ProtocolConfig`, `AdminConfig`, `RaydiumConfig`, `CurveStatus`) |
@@ -84,7 +86,7 @@ use lastbuy_sdk::constants::{CURVE_STATE_DISCRIMINATOR, BUY_EXACT_SIZE};
 
 ```toml
 [dependencies]
-lastbuy-sdk = { version = "0.2.2", default-features = false, features = ["math"] }
+lastbuy-sdk = { version = "0.3.0", default-features = false, features = ["math"] }
 ```
 
 ```rust
@@ -168,11 +170,6 @@ cargo run --example migrate  # runs prepare_migration + migrate together
 ```
 
 > **Note:** These examples hit a real RPC and mutate on-chain state. Use devnet and a dedicated test keypair. Admin/dev-gated instructions are not included.
-
-## Notes
-- This is a **low-level** crate: it builds `solana_instruction::Instruction`s and derives accounts/PDAs, but does not send transactions, manage signers/wallets, or do RPC calls.
-- Account fetching/deserialization is available via `accounts` feature; RPC integration is left to your client.
-- API may evolve as the program changes (following the `0.2.x` series).
 
 ## License
 Apache-2.0
