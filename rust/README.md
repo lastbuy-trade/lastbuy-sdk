@@ -2,7 +2,7 @@
 
 Low-level Rust SDK for the LastBuy bonding curve program on Solana.
 
-This crate provides instruction builders, PDA derivation helpers, account/event types, discriminators, constants, and error types to interact with the LastBuy bonding curve program directly without pulling in a full high-level client.
+This crate provides instruction builders, PDA derivation helpers, account/event types, discriminators, constants, error types, and integer math for trading on the LastBuy bonding curve.
 
 An optional high-level client is planned and will live in this crate behind the `client` feature flag.
 
@@ -29,7 +29,7 @@ lastbuy-sdk = { version = "0.2.2", default-features = false, features = ["instru
 
 | Feature | What it enables |
 | --- | --- |
-| `full` (default) | `events`, `accounts`, `instructions`, `pda`, `error` |
+| `full` (default) | `events`, `parse-events`, `accounts`, `instructions`, `pda`, `error`, `math` |
 | `instructions` | Instruction builders (`buy_exact`, `sell_exact`, `launch`, etc.), requires `pda`, `types`, `error` |
 | `accounts` | Account structs/deserialization helpers (`CurveState`, `GlobalConfig`, `PrizePool`, `PoolCreatorState`) |
 | `events` | Anchor event types and discriminators |
@@ -37,6 +37,7 @@ lastbuy-sdk = { version = "0.2.2", default-features = false, features = ["instru
 | `types` | Shared types (`FeeConfig`, `ProtocolConfig`, `AdminConfig`, `RaydiumConfig`, `CurveStatus`) |
 | `pda` | PDA derivation helpers for all program PDAs |
 | `error` | `SdkError` / `SdkResult` |
+| `math` | Integer trade quotes, swap fees, curve metrics, and `MathError`. Enables `error`. |
 | `dev` | Admin-only instructions (enabled additionally when needed) |
 
 ## Usage
@@ -78,6 +79,61 @@ let ix = BuyExactInstruction::new(ctx, args)?;
 ```rust
 use lastbuy_sdk::constants::{CURVE_STATE_DISCRIMINATOR, BUY_EXACT_SIZE};
 ```
+
+### Quote trades with integer math
+
+```toml
+[dependencies]
+lastbuy-sdk = { version = "0.2.2", default-features = false, features = ["math"] }
+```
+
+```rust
+use lastbuy_sdk::{
+    constants::program::{INITIAL_VIRTUAL_SOL_RESERVES, INITIAL_VIRTUAL_TOKEN_RESERVES},
+    error::{MathError, SdkResult},
+    math::{calculate_buy_amount_out, calculate_swap_fee_split},
+};
+
+fn main() -> SdkResult<()> {
+    let gross_lamports = 1_000_000_000;
+    // Protocol, creator, and last-buyer fees in basis points. Winner undefined.
+    let fees = calculate_swap_fee_split(gross_lamports, 100, 30, 70, false)?;
+    let net_lamports = gross_lamports
+        .checked_sub(fees.total_fee)
+        .ok_or(MathError::Overflow)?;
+    let quote = calculate_buy_amount_out(
+        INITIAL_VIRTUAL_SOL_RESERVES,
+        INITIAL_VIRTUAL_TOKEN_RESERVES,
+        net_lamports,
+    )?;
+    assert_eq!(quote.tokens_out, 50_863_775_023_833);
+    Ok(())
+}
+```
+
+- SOL amounts are in lamports, token amounts are in atoms, and fee rates are in
+  basis points. Pass net SOL after fees to `calculate_buy_amount_out`. For a
+  sell, subtract swap fees from the `gross_sol_out` returned by
+  `calculate_sell_amount_out`. For an existing curve, use its current virtual
+  reserves and the swap rates in the `fees` field of `GlobalConfig`.
+- `calculate_swap_fee_split` rounds each fee down separately. Set
+  `is_winner_defined` once the canonical winner is defined to split the last-buyer
+  fee between the protocol and creator. The creator receives any odd lamport.
+- `market_cap_lamports` scales by total supply in atoms. `price_lamports` gives
+  the price of one whole token and can round down to zero.
+- `max_buy_lamports` returns the largest gross input whose net amount fits the
+  remaining migration headroom. Pass the live curve's `real_reserves_sol` and
+  `migration_threshold_sol_snapshot`. At launch, use zero real reserves and the
+  `protocol.migration_threshold_sol` field of `GlobalConfig`. The instruction
+  checks trade status, reserve availability, and slippage. `MIN_SOL_IN_THRESHOLD`
+  is the minimum gross buy that can update the last buyer and timer.
+- Rust indexers can use these helpers directly. Frontend ports can use `BigInt`
+  and check overflow at the same product and output widths. The
+  [math tests](./tests/math.rs) pin launch, dust, fee, and maximum-buy cases.
+
+The `constants::program` module includes the initial reserves, token supply and
+decimals, `constraints`, and `math::FEE_DENOMINATOR`. These constants are
+available with any feature set.
 
 ## Examples
 
