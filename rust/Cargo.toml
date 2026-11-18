@@ -1,8 +1,9 @@
 [package]
 name = "lastbuy-sdk"
-version = "0.3.0"
+version = "0.3.1"
 edition = "2024"
 description = "Low-level Rust SDK for the LastBuy bonding curve Solana program (instruction builders, PDAs, account/event types, constants)."
+license = "Apache-2.0"
 license-file = "../LICENSE"
 repository = "https://github.com/lastbuy-trade/lastbuy-sdk"
 readme = "README.md"

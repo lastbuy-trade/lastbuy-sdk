@@ -17,14 +17,14 @@ Add to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-lastbuy-sdk = "0.3.0"
+lastbuy-sdk = "0.3.1"
 ```
 
 By default the crate enables the `full` feature set. You can trim dependencies via feature flags:
 
 ```toml
 [dependencies]
-lastbuy-sdk = { version = "0.3.0", default-features = false, features = ["instructions", "pda", "types"] }
+lastbuy-sdk = { version = "0.3.1", default-features = false, features = ["instructions", "pda", "types"] }
 ```
 
 ## Feature flags
@@ -86,7 +86,7 @@ use lastbuy_sdk::constants::{CURVE_STATE_DISCRIMINATOR, BUY_EXACT_SIZE};
 
 ```toml
 [dependencies]
-lastbuy-sdk = { version = "0.3.0", default-features = false, features = ["math"] }
+lastbuy-sdk = { version = "0.3.1", default-features = false, features = ["math"] }
 ```
 
 ```rust
