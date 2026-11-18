@@ -11,6 +11,8 @@ pub struct LaunchEvent {
     pub mint: Pubkey,
     pub curve: Pubkey,
     pub timestamp: i64,
+    pub last_buy_timer_secs_snapshot: i64,
+    pub migration_threshold_sol_snapshot: u64,
     pub token_name: String,
     pub token_symbol: String,
     pub token_uri: String,
