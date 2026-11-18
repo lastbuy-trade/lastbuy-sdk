@@ -4,6 +4,7 @@ pub use seeds::*;
 pub use layout::*;
 pub use account_counts::*;
 pub use ids::*;
+pub use program::*;
 
 use solana_pubkey::{Pubkey, pubkey};
 
@@ -334,5 +335,31 @@ pub mod account_counts {
         pub const CLAIM_CREATOR_FEE_REMAINING_ACCOUNTS: usize = 9;
         pub const MIGRATE_REMAINING_ACCOUNTS: usize = 11;
         pub const PREPARE_MIGRATION_REMAINING_ACCOUNTS: usize = 2;
+    }
+}
+
+pub mod program {
+    pub use constraints::*;
+    pub use math::*;
+
+    pub const TOTAL_SUPPLY: u64 = 1_000_000_000_000_000;
+    pub const TOKEN_DECIMALS: u8 = 6;
+    pub const INITIAL_VIRTUAL_SOL_RESERVES: u64 = 20_000_000_000;
+    pub const INITIAL_VIRTUAL_TOKEN_RESERVES: u64 = 1_088_900_000_000_000;
+
+    pub mod constraints {
+        /// Minimum gross buy in lamports that can update the last buyer and timer
+        pub const MIN_SOL_IN_THRESHOLD: u64 = 1_000_000;
+
+        pub const MAX_TOKEN_NAME_LEN: usize = 64;
+        pub const MAX_TOKEN_SYMBOL_LEN: usize = 20;
+        pub const MAX_TOKEN_URI_LEN: usize = 200;
+
+        /// Cap on the sum of configured swap rates and the creator fee claim rate
+        pub const MAX_ALLOWED_FEE_BPS: u16 = 500;
+    }
+
+    pub mod math {
+        pub const FEE_DENOMINATOR: u16 = 10_000;
     }
 }
